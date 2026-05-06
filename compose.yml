@@ -1,0 +1,10 @@
+services:
+
+  redis:
+    image: redis:latest
+    volumes:
+      - redis_data:/data
+    command: redis-server --save 60 1
+
+volumes:
+  redis_data:

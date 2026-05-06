@@ -14,11 +14,12 @@
     "handy-redis": "^2.2.1",
     "node-fetch": "^2.6.1",
     "redis": "^3.1.2",
+    "tsx": "^4.21.0",
     "zulip-js": "^2"
   },
   "scripts": {
     "build": "tsc",
-    "dev": "nodemon --watch 'src/**/*.ts' --exec ts-node src/index.ts",
-    "start": "node dist/index.js"
+    "dev": "tsx watch src/index.ts",
+    "start": "tsx src/index.ts"
   }
 }
