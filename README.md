@@ -24,6 +24,7 @@ And you're set, try using it from your Zulip instance.
 To set a redis port, password, or database, use these environment variables:
 
 ```
+REDIS_HOST
 REDIS_PORT
 REDIS_PASSWORD
 REDIS_DB
@@ -32,7 +33,7 @@ REDIS_DB
 Example:
 
 ```
-REDIS_PORT=9379 REDIS_DB=5 pnpm dev
+REDIS_HOST=localhost REDIS_PORT=9379 REDIS_DB=5 pnpm dev
 ```
 
 ## Production

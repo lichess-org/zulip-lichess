@@ -1,4 +1,11 @@
 services:
+  bot:
+    image: ghcr.io/fitztrev/zulip-lichess:docker
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_DB=0
+    volumes:
+      - ./zuliprc:/app/zuliprc:ro
 
   redis:
     image: redis:latest
