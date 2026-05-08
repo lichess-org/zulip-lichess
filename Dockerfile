@@ -1,6 +1,7 @@
-FROM node:25-slim
+FROM node:25-alpine
 
-RUN npm install --global pnpm
+RUN apk add git && \
+    npm install --global pnpm
 
 COPY . /app
 WORKDIR /app

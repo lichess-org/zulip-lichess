@@ -31,9 +31,13 @@ export interface Help {
   verb: 'help';
 }
 
-type Command = ParrotAdd | ParrotDel | Hi | Play | Help | ParrotGet;
+export interface Version {
+  verb: 'version';
+}
 
-const all = new Set(['add', 'del', 'list', 'hi', 'hello', 'help', 'halp', 'h', 'play']);
+type Command = ParrotAdd | ParrotDel | Hi | Play | Help | Version | ParrotGet;
+
+const all = new Set(['add', 'del', 'list', 'hi', 'hello', 'help', 'halp', 'version', 'h', 'play']);
 
 export const parseCommand = (cmd: string, _orig: ZulipOrig): Command => {
   const split = cmd.split(' ').map(t => t.trim());
@@ -44,6 +48,7 @@ export const parseCommand = (cmd: string, _orig: ZulipOrig): Command => {
   if (verb == 'del') return { verb: 'parrotDel', key: split[1].toLowerCase() };
   if (verb == 'hi' || verb == 'hello') return { verb: 'hi' };
   if (verb == 'help' || verb == 'halp' || verb == 'h') return { verb: 'help' };
+  if (verb == 'version') return { verb: 'version' };
   if (verb == 'play') return parsePlay(split);
   return { verb: 'parrotGet', key: cmd.replace(/ /g, "").toLowerCase() };
 };
