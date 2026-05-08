@@ -94,7 +94,8 @@ const crossMark = 'cross_mark';
     const cmd = `git log -n 1`;
     const version = require('child_process').execSync(cmd).toString().trim();
     const shortSha = version.split('\n')[0].split(' ')[1].slice(0, 7);
-    await reply(z, msg, `${version}\n\nhttps://github.com/ornicar/zulip-lichess/commit/${shortSha}`);
+    const url = process.env.REPO_URL ? `${process.env.REPO_URL}/commit/${shortSha}` : '';
+    await reply(z, msg, `${version}\n\n${url}`);
   }
 
   while (true) {

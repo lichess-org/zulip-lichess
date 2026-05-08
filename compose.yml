@@ -1,11 +1,12 @@
 services:
   bot:
     # image: ghcr.io/fitztrev/zulip-lichess:docker
-    # image: zulip-howard
     build: .
     environment:
       - REDIS_HOST=redis
-      - REDIS_DB=0
+      - REDIS_DB=5
+      - HOSTED_ON=
+      - REPO_URL=https://github.com/fitztrev/zulip-lichess
     volumes:
       - ./zuliprc:/app/zuliprc:ro
 
