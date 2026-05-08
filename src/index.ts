@@ -83,6 +83,9 @@ const crossMark = 'cross_mark';
         '- `' + mention + ' del key` Delete the message associated with this key',
         '- `' + mention + ' play 3+2` Create a casual 3+2 open challenge for anyone to join',
         '- `' + mention + ' play 5+0 rated` Create a rated 5+0 open challenge for anyone to join',
+        '- `' + mention + ' hi` :wave:',
+        '- `' + mention + ' help` Show this message',
+        '- `' + mention + ' version` Show the current version of the bot',
       ].join('\n')
     );
   };
