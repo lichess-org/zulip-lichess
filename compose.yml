@@ -2,6 +2,9 @@ services:
   bot:
     # image: ghcr.io/ornicar/zulip-lichess:master
     build: .
+    restart: unless-stopped
+    depends_on:
+      - redis
     environment:
       - REDIS_HOST=redis
       - REDIS_DB=5
@@ -12,6 +15,7 @@ services:
 
   redis:
     image: redis:latest
+    restart: unless-stopped
     volumes:
       - redis_data:/data
     command: redis-server --save 60 1
