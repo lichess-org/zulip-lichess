@@ -1,6 +1,6 @@
 services:
   bot:
-    # image: ghcr.io/ornicar/zulip-lichess:master
+    # image: ghcr.io/lichess-org/zulip-lichess:latest
     build: .
     restart: unless-stopped
     depends_on:
@@ -9,7 +9,7 @@ services:
       - REDIS_HOST=redis
       - REDIS_DB=5
       - HOSTED_ON=
-      - REPO_URL=https://github.com/ornicar/zulip-lichess
+      - REPO_URL=https://github.com/lichess-org/zulip-lichess
     volumes:
       - ./zuliprc:/app/zuliprc:ro
 
