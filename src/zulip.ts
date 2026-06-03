@@ -1,4 +1,4 @@
-import { sleep } from './util';
+import { hostedOn, sleep } from './util';
 
 export interface Zulip {
   queues: any;
@@ -60,7 +60,7 @@ export const messageLoop = async (zulip: Zulip, handler: (msg: ZulipMsg) => Prom
   }
   let lastEventId = q.last_event_id;
   console.log(`Connected to zulip as @${me.full_name}, awaiting commands`);
-  await send(zulip, { type: 'stream', to: 'zulip', topic: 'bots log' }, 'I started.');
+  await send(zulip, { type: 'stream', to: 'zulip', topic: 'bots log' }, `I started (on \`${hostedOn}\`)`);
 
   while (true) {
     const timeout = setTimeout(() => {

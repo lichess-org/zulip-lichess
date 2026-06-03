@@ -10,7 +10,8 @@ export interface Parrot {
 // Just one possible implementation.
 export class RedisParrot implements Parrot {
   private client = createNodeRedisClient({
-    port: parseInt(process.env.REDIS_PORT),
+    host: process.env.REDIS_HOST,
+    port: parseInt(process.env.REDIS_PORT || '6379'),
     password: process.env.REDIS_PASSWORD,
     db: process.env.REDIS_DB,
   });

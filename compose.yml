@@ -1,0 +1,24 @@
+services:
+  bot:
+    # image: ghcr.io/lichess-org/zulip-lichess:latest
+    build: .
+    restart: unless-stopped
+    depends_on:
+      - redis
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_DB=5
+      - HOSTED_ON=
+      - REPO_URL=https://github.com/lichess-org/zulip-lichess
+    volumes:
+      - ./zuliprc:/app/zuliprc:ro
+
+  redis:
+    image: redis:latest
+    restart: unless-stopped
+    volumes:
+      - redis_data:/data
+    command: redis-server --save 60 1
+
+volumes:
+  redis_data:

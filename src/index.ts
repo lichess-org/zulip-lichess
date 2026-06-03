@@ -6,6 +6,9 @@ import fetch from 'node-fetch';
 import { URLSearchParams } from 'url';
 import { sleep } from './util';
 
+const checkMark = 'check';
+const crossMark = 'cross_mark';
+
 (async () => {
   const z: Zulip = await zulipInit.default({ zuliprc: 'zuliprc' });
   const parrot = new RedisParrot();
@@ -16,17 +19,21 @@ import { sleep } from './util';
       const command = parseCommand(msg.command, msg);
       switch (command.verb) {
         case 'parrotAdd':
-          parrot.add(command.key, command.value);
-          react(z, msg, 'check_mark');
+          if (command.value) {
+            parrot.add(command.key, command.value);
+            react(z, msg, checkMark);
+          } else {
+            react(z, msg, crossMark);
+          }
           break;
         case 'parrotGet':
           const value = await parrot.get(command.key);
           if (value) reply(z, msg, value);
-          else react(z, msg, 'cross_mark');
+          else react(z, msg, crossMark);
           break;
         case 'parrotDel':
           const done = await parrot.del(command.key);
-          react(z, msg, done ? 'check_mark' : 'cross_mark');
+          react(z, msg, done ? checkMark : crossMark);
           break;
         case 'hi':
           reply(z, msg, ':wave: Why hello there!');
@@ -37,10 +44,13 @@ import { sleep } from './util';
         case 'help':
           await help(msg);
           break;
+        case 'version':
+          await version(msg);
+          break;
       }
     } catch (err) {
       console.log(err);
-      await react(z, msg, 'cross_mark');
+      await react(z, msg, crossMark);
     }
   };
 
@@ -53,7 +63,7 @@ import { sleep } from './util';
       method: 'post',
       body: params,
     });
-    const c = (await res.json()).challenge;
+    const c = (await res.json());
     await reply(
       z,
       msg,
@@ -73,9 +83,20 @@ import { sleep } from './util';
         '- `' + mention + ' del key` Delete the message associated with this key',
         '- `' + mention + ' play 3+2` Create a casual 3+2 open challenge for anyone to join',
         '- `' + mention + ' play 5+0 rated` Create a rated 5+0 open challenge for anyone to join',
+        '- `' + mention + ' hi` :wave:',
+        '- `' + mention + ' help` Show this message',
+        '- `' + mention + ' version` Show the current version of the bot',
       ].join('\n')
     );
   };
+
+  const version = async (msg: ZulipMsg) => {
+    const cmd = `git log -n 1`;
+    const version = require('child_process').execSync(cmd).toString().trim();
+    const shortSha = version.split('\n')[0].split(' ')[1].slice(0, 7);
+    const url = process.env.REPO_URL ? `${process.env.REPO_URL}/commit/${shortSha}` : '';
+    await reply(z, msg, `${version}\n\n${url}`);
+  }
 
   while (true) {
     await messageLoop(z, messageHandler);
