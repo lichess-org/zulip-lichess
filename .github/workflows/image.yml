@@ -49,9 +49,6 @@ jobs:
   deploy:
     if: github.repository_owner == 'lichess-org' && github.ref_name == github.event.repository.default_branch
     needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: deploy
-        env:
-          DEPLOY_WEBHOOK_URL: ${{ secrets.DEPLOY_WEBHOOK_URL }}
-        run: curl -X POST $DEPLOY_WEBHOOK_URL
+    uses: lichess-org/.github/.github/workflows/deploy.yml@main
+    secrets:
+      deploy_webhook_url: ${{ secrets.DEPLOY_WEBHOOK_URL }}
