@@ -4,17 +4,17 @@
   "main": "index.js",
   "license": "MIT",
   "devDependencies": {
-    "@types/node": "^14.6.0",
+    "@types/node": "^14.18.63",
     "@types/redis": "2.8.32",
-    "typescript": "^4.2"
+    "typescript": "^4.9.5"
   },
   "dependencies": {
-    "@types/node-fetch": "^2.5.10",
-    "handy-redis": "^2.2.1",
-    "node-fetch": "^2.6.1",
+    "@types/node-fetch": "^2.6.13",
+    "handy-redis": "^2.3.1",
+    "node-fetch": "^2.7.0",
     "redis": "^3.1.2",
-    "tsx": "^4.21.0",
-    "zulip-js": "^2"
+    "tsx": "^4.23.13",
+    "zulip-js": "^2.1.0"
   },
   "scripts": {
     "build": "tsc",
